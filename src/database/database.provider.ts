@@ -5,12 +5,11 @@ export const databaseProvider = {
   useFactory: async () => {
     const dataSource = new DataSource({
       type: 'postgres',
-      host: 'localhost',
+      host: 'yummy_db',
       port: 5432,
-      username: 'yummy',
-      password: 'admin',
-      database: 'commerce',
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DATABASE,
     });
 
     return dataSource.initialize();
