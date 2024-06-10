@@ -24,7 +24,7 @@ export class ProductService {
       LEFT JOIN categories c ON c.id = pc.category_id
       GROUP BY p.id, p.name, p.price
       ORDER BY p.id ASC
-      OFFSET ${page * pageSize}
+      OFFSET ${(page - 1) * pageSize}
       LIMIT ${pageSize};
     `);
 
@@ -41,14 +41,14 @@ export class ProductService {
       await this.dataSource.query<unknown[]>(`
       SELECT id
       FROM products
-      OFFSET ${(page + 1) * pageSize}
+      OFFSET ${page * pageSize}
       LIMIT 1
     `)
     ).length;
 
     return {
       products,
-      metadata: {
+      pagination: {
         page,
         pageSize,
         pagesCount: Math.ceil(totalCount / pageSize),

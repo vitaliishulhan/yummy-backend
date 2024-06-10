@@ -8,7 +8,7 @@ export interface IProductWithCategories extends IProduct {
 }
 
 export interface IGetPageResponse {
-  metadata: {
+  pagination: {
     page: number;
     pageSize: number;
     pagesCount: number;

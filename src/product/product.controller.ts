@@ -1,5 +1,4 @@
-import { BadRequestException, Controller, Get, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { BadRequestException, Controller, Get, Query } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { IGetPageResponse } from './product.types';
 
@@ -9,17 +8,25 @@ export class ProductController {
 
   @Get()
   async getPage(
-    @Req() req: Request<unknown, unknown, { page: string; pageSize: string }>,
+    @Query() query: { page: number; pageSize: number },
   ): Promise<IGetPageResponse> {
-    const page = Number(req.body.page);
-    const pageSize = Number(req.body.pageSize);
+    const page = Number(query.page);
+    const pageSize = Number(query.pageSize);
 
     if (Number.isNaN(page)) {
       throw new BadRequestException('page should be a number');
     }
 
+    if (page < 1) {
+      throw new BadRequestException('page should be more or equal to 1');
+    }
+
     if (Number.isNaN(pageSize)) {
       throw new BadRequestException('page size should be a number');
+    }
+
+    if (pageSize < 1) {
+      throw new BadRequestException('page size should be more or equal to 1');
     }
 
     return this.productService.getPage(page, pageSize);
