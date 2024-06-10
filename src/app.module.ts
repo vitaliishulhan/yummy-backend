@@ -1,10 +1,26 @@
 import { Module } from '@nestjs/common';
 import { AppService } from './app.service';
+import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { DatabaseModule } from './database/database.module';
 import { ProductModule } from './product/product.module';
 
 @Module({
-  imports: [DatabaseModule, ProductModule],
-  providers: [AppService],
+  imports: [
+    CacheModule.register({
+      isGlobal: true,
+      ttl: 5000,
+      max: 200,
+    }),
+    DatabaseModule,
+    ProductModule,
+  ],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
+  ],
 })
 export class AppModule {}
