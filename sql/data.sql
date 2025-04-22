@@ -1,5 +1,3 @@
-\c commerce;
-
 INSERT INTO categories (name) VALUES ('Electronics'), ('Books'), ('Clothing'), ('Home & Kitchen'), ('Sports & Outdoors'), ('Beauty & Personal Care'), ('Toys & Games'), ('Automotive'), ('Health & Household'), ('Grocery & Gourmet Food');
 
 INSERT INTO products (name, price) VALUES ('Ergonomic Cotton Car', 141.08),
