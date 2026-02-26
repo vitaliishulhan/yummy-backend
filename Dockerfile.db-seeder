@@ -1,0 +1,10 @@
+FROM postgres:16-alpine
+
+WORKDIR /seed
+
+COPY scripts/ .
+
+RUN chmod +x ./entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
+
